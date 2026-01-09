@@ -1,0 +1,72 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32 md:pb-8">
+  <!-- Header Section -->
+  <div class="mb-10">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3">My Tasks</h1>
+    <p class="text-lg text-gray-600">Manage your reminders and stay organized ✨</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Tasks Assigned to Me -->
+    <div class="space-y-5">
+      <div class="flex items-center justify-between mb-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-5 border-2 border-blue-200 shadow-sm">
+        <h2 class="text-xl font-bold text-blue-900 flex items-center">
+          <span class="w-3 h-3 bg-blue-600 rounded-full mr-3 animate-pulse"></span>
+          Assigned to Me
+        </h2>
+        <span class="text-sm font-bold text-blue-700 bg-white px-4 py-2 rounded-full shadow-sm">
+          <%= @my_tasks.count %> <%= 'task'.pluralize(@my_tasks.count) %>
+        </span>
+      </div>
+      
+      <div id="my_tasks" class="space-y-4">
+        <%= turbo_stream_from "tasks_#{current_user.id}" %>
+        <% if @my_tasks.any? %>
+          <% @my_tasks.each do |task| %>
+            <%= render "task", task: task %>
+          <% end %>
+        <% else %>
+          <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-300 hover:border-blue-400 transition-all">
+            <div class="w-24 h-24 mx-auto mb-5 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center">
+              <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+            </div>
+            <p class="text-gray-700 text-lg font-semibold mb-2">No tasks assigned yet</p>
+            <p class="text-gray-500 text-sm">Your upcoming tasks will appear here</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Tasks I Assigned to Others -->
+    <div class="space-y-5">
+      <div class="flex items-center justify-between mb-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-5 border-2 border-purple-200 shadow-sm">
+        <h2 class="text-xl font-bold text-purple-900 flex items-center">
+          <span class="w-3 h-3 bg-purple-600 rounded-full mr-3 animate-pulse"></span>
+          I Assigned to Others
+        </h2>
+        <span class="text-sm font-bold text-purple-700 bg-white px-4 py-2 rounded-full shadow-sm">
+          <%= @created_tasks.count %> <%= 'task'.pluralize(@created_tasks.count) %>
+        </span>
+      </div>
+      
+      <div class="space-y-4">
+        <% if @created_tasks.any? %>
+          <% @created_tasks.each do |task| %>
+            <%= render "task", task: task %>
+          <% end %>
+        <% else %>
+          <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-300 hover:border-purple-400 transition-all">
+            <div class="w-24 h-24 mx-auto mb-5 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center">
+              <svg class="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+            </div>
+            <p class="text-gray-700 text-lg font-semibold mb-2">No tasks delegated yet</p>
+            <p class="text-gray-500 text-sm">Create tasks and assign them to others</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

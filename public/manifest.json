@@ -1,0 +1,9 @@
+{
+  "name": "Reminder Service",
+  "short_name": "Reminders",
+  "description": "Task reminder and management application",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff"
+}
