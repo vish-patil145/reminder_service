@@ -1,4 +1,4 @@
-name: CI
+name: Reminder Service Continuous Integration(CI)
 
 on:
   pull_request:
