@@ -2,7 +2,7 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
-    before_action :load_current_user
+    before_action :require_authentication
     helper_method :current_user, :user_signed_in?
   end
 
@@ -14,14 +14,8 @@ module Authentication
 
   private
 
-  def load_current_user
-    if session = find_session_by_cookie
-      @current_user = session.user
-    end
-  end
-
   def current_user
-    @current_user
+    @current_user ||= find_session_by_cookie&.user
   end
 
   def user_signed_in?

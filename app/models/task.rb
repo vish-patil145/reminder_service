@@ -17,7 +17,7 @@ class Task < ApplicationRecord
   scope :overdue, -> { where("scheduled_at < ? AND status != ?", Time.current, "completed") }
 
   # Temporarily comment out the callback until Solid Queue is set up
-  after_create :schedule_reminder
+  # after_create :schedule_reminder
   after_update :broadcast_update, if: -> { saved_change_to_status? || saved_change_to_completed_at? }
 
   def complete!
