@@ -87,9 +87,9 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: reminder_service_production
+    database: postgres
     username: reminder_service
-    password: <%= ENV["REMINDER_SERVICE_DATABASE_PASSWORD"] %>
+    password: password
   cache:
     <<: *primary_production
     database: reminder_service_production_cache
